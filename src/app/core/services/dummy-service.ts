@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {catchError, map, Observable, throwError} from 'rxjs';
 import {Dummy} from '../models/dummy';
@@ -33,7 +33,7 @@ export class DummyService {
 
   putDummy(id: number, dummyField:string): Observable<Dummy>{
     const dummyDto = {
-      dummyField
+      "dummy_field" : dummyField
     }
     const url = this.resourcePath+`/${id}`
     return this.http.put<Dummy>(url, dummyDto).pipe(
@@ -84,9 +84,11 @@ export class DummyService {
     )
   }
 
-  createDummy(dummyField:string): Observable<Dummy>{
+  createDummy(dummyField:string, fechaDate: Date ): Observable<Dummy>{
+    const fecha = fechaDate.toISOString().slice(0, 10) //ACA PARSEAMOS DE DATE A 'yyyy-MM-dd'
     const dummyDto = {
-      dummyField
+      "dummy_field" : dummyField,
+      // fecha    //aca iria la fecha, pero ahora no la mandamos
     }
     return this.http.post<Dummy>(this.resourcePath, dummyDto).pipe(
       map(dummy =>{
@@ -103,5 +105,33 @@ export class DummyService {
 
       })
     )
+  }
+
+  getDummyByDummyFieldOrFecha(dummyField?: string, fechaDate?: Date){
+    let params : HttpParams = new HttpParams()
+    const url = this.resourcePath+"/search"
+
+    if (dummyField){
+      params = params.set("dummyField", dummyField)
+    }
+    if (fechaDate) {
+      params = params.set("fromDate", fechaDate.toISOString().slice(0, 10))
+    }
+
+    return this.http.get<Dummy[]>(url, {params}).pipe(
+      map(dummies => {
+        return dummies
+      }),
+      catchError(error => {
+        console.error(error)
+        if (error.status === 400){
+          return throwError(() => new Error(error.message))
+        }else{
+          return throwError(() => new Error("Ocurrio un error inesperado"))
+        }
+      })
+    )
+
+
   }
 }

@@ -1,1 +1,109 @@
-<p>lista-dummies works!</p>
+<div class="bg-gray-500 min-h-screen pt-10">
+<form #listaForm="ngForm" (ngSubmit)="onSubmit()" class="py-10 px-6 max-w-5xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg space-y-6">
+
+
+  <label class="inline-flex items-center cursor-pointer">
+    <input type="checkbox" name="toggleActivo" [(ngModel)]="toggleActivo" class="sr-only peer">
+    <div class="relative w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-500 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
+    <span class="ms-3 text-base font-medium text-gray-900 dark:text-gray-200">Filtros</span>
+  </label>
+
+
+  @if (toggleActivo) {
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+      <div>
+        <label for="dummyField" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Dummy Field</label>
+        <input type="text"
+               id="dummyField"
+               name="dummyField"
+               [(ngModel)]="dummyField"
+               placeholder="Dummy Field"
+               class="w-full p-2.5 text-sm border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+      </div>
+
+
+      <div>
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Fecha</label>
+        <mat-form-field appearance="fill" class="w-full">
+          <mat-label>Choose a date</mat-label>
+          <input matInput
+                 [matDatepicker]="picker"
+                 [(ngModel)]="fecha"
+                 name="fecha">
+          <mat-datepicker-toggle matIconSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+<!--      TODO:MAS FACIL PELOTUDO-->
+<!--      <div class="flex flex-col">-->
+<!--        <label class="text-sm">Fecha desde</label>-->
+<!--        <input formControlName="fromDate" type="date" class="p-2 border rounded-md"/>-->
+<!--      </div>-->
+    </div>
+  }
+
+
+  <div class="flex flex-col sm:flex-row justify-end gap-4">
+    @if (toggleActivo){
+      <button type="button"
+            (click)="limpiarFiltros()"
+            class="w-full sm:w-auto px-5 py-2.5 text-sm font-medium text-white bg-gray-500 rounded-lg hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-500">
+      Limpiar Filtros
+    </button>
+    <button type="submit"
+            class="w-full sm:w-auto px-5 py-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+      Aplicar Filtros
+    </button>
+    } @else {
+      <button type="submit"
+              class="w-full sm:w-auto px-5 py-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        Buscar
+      </button>
+    }
+  </div>
+</form>
+
+
+<div class="overflow-x-auto mt-10 max-w-5xl mx-auto rounded-lg shadow-lg">
+  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <thead class="text-xs uppercase bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+    <tr>
+      <th class="px-6 py-3">ID</th>
+      <th class="px-6 py-3">Dummy Field</th>
+      <th class="px-6 py-3">Fecha</th>
+      <th class="px-6 py-3 text-center">Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+      @if (list.length === 0) {
+        <tr>
+          <td colspan="4" class="text-center py-4 text-gray-500 dark:text-gray-300">
+            No hay datos disponibles.
+          </td>
+        </tr>
+      } @else {
+        @for (item of list; track item.id) {
+          <tr class="odd:bg-white even:bg-gray-50 dark:odd:bg-gray-900 dark:even:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+            <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">{{ item.id }}</td>
+            <td class="px-6 py-4">{{ item.dummy_field }}</td>
+            <td class="px-6 py-4">{{ item.fecha | date:'yyyy/MM/dd' }}</td>
+            <td class="px-6 py-4 text-center">
+              <a (click)="modificar(item.id)"
+                 class="text-blue-600 dark:text-blue-400 hover:underline mr-4 cursor-pointer">
+                Modificar
+              </a>
+              <a (click)="eliminar(item.id)"
+                 class="text-red-500 dark:text-red-400 hover:underline cursor-pointer">
+                Eliminar
+              </a>
+            </td>
+          </tr>
+        }
+      }
+    </tbody>
+  </table>
+</div>
+</div>

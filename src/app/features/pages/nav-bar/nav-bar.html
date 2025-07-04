@@ -1,0 +1,21 @@
+<nav class="bg-white dark:bg-gray-900 shadow-md">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16 items-center">
+
+      <div class="flex-shrink-0 text-xl font-semibold text-indigo-700 dark:text-indigo-300">
+        Dummy App
+      </div>
+
+      <div class="flex space-x-4">
+        <a [routerLink]="['/crearDummy']"
+           class="px-4 py-2 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 transition-all duration-300">
+          Crear Dummy
+        </a>
+        <a [routerLink]="['']"
+           class="px-4 py-2 rounded-full bg-pink-600 text-white hover:bg-pink-700 transition-all duration-300">
+          Buscar Dummy
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>

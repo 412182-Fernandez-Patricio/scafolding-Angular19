@@ -1,1 +1,43 @@
-<p>crear-dummy works!</p>
+<div class="bg-gray-500 min-h-screen pt-10">
+<form #dummyForm="ngForm" (ngSubmit)="onSubmit(dummyForm)" class="py-10 px-6 max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg space-y-6">
+  <div class="grid gap-6 mb-6 md:grid-cols-2">
+    <div>
+      <label for="dummy_field" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dummy Field</label>
+      <input type="text" id="dummy_field"
+             name="dummy_field"
+             [(ngModel)]="dummy_field"
+             class="w-full p-2.5 text-sm border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+             placeholder="John" required />
+    </div>
+
+    <div>
+      <label for="fecha" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha</label>
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Choose a date</mat-label>
+        <input matInput
+               [matDatepicker]="picker"
+               [(ngModel)]="fecha"
+               name="fecha"
+               class="dark:text-white dark:placeholder-gray-400" />
+        <mat-datepicker-toggle matIconSuffix [for]="picker">
+          <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <!--      TODO:MAS FACIL PELOTUDO-->
+    <!--      <div class="flex flex-col">-->
+    <!--        <label class="text-sm">Fecha desde</label>-->
+    <!--        <input formControlName="fromDate" type="date" class="p-2 border rounded-md"/>-->
+    <!--      </div>-->
+  </div>
+
+  <div class="flex justify-end">
+    <button type="submit"
+            class="px-5 py-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+      Submit
+    </button>
+  </div>
+</form>
+</div>

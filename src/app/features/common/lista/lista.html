@@ -29,11 +29,11 @@
             {{ item.fecha | date:'yyyy/MM/dd' }}
           </td>
           <td class="px-2 py-4">
-            <a href="#" class="pr-2 font-medium text-blue-600 dark:text-blue-500 hover:underline">
+            <a (click)="modificar(item.id)" class="pr-2 font-medium text-blue-600 dark:text-blue-500 hover:underline">
               Modificar
             </a>
-            <a href="#" class="pl-2 font-medium text-red-500 dark:text-red-400 hover:underline">
-              Modificar
+            <a (click)="eliminar(item.id)" class="pl-2 font-medium text-red-500 dark:text-red-400 hover:underline">
+              Eliminar
             </a>
           </td>
         </tr>
